@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fbee.modules.mybatis.dao.TenantsCustomersBaseMapper">
+	<resultMap id="BaseResultMap"
+		type="com.fbee.modules.mybatis.entity.TenantsCustomersBaseEntity">
+		<id column="CUSTOMER_ID" jdbcType="INTEGER" property="customerId" />
+		<result column="TENANT_ID" jdbcType="INTEGER" property="tenantId" />
+		<result column="CUSTOMER_MOBILE" jdbcType="VARCHAR" property="customerMobile" />
+		<result column="CUSTOMER_NAME" jdbcType="VARCHAR" property="customerName" />
+		<result column="SEX" jdbcType="VARCHAR" property="sex" />
+		<result column="CONTACT_MOBILE" jdbcType="VARCHAR" property="contactMobile" />
+		<result column="CONTACT_ADDRESS" jdbcType="VARCHAR" property="contactAddress" />
+		<result column="AGE_RANGE" jdbcType="VARCHAR" property="ageRange" />
+		<result column="remarks" jdbcType="VARCHAR" property="remarks" />
+		<result column="is_usable" jdbcType="VARCHAR" property="isUsable" />
+		<result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+		<result column="add_account" jdbcType="VARCHAR" property="addAccount" />
+		<result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+		<result column="modify_account" jdbcType="VARCHAR" property="modifyAccount" />
+		<result column="HOUSE_TYPE" jdbcType="VARCHAR" property="houseType" />
+		<result column="HOUSE_AREA" jdbcType="DECIMAL" property="houseArea" />
+		<result column="FAMILY_COUNT" jdbcType="INTEGER" property="familyCount" />
+		<result column="CHILDREN_COUNT" jdbcType="INTEGER" property="childrenCount" />
+		<result column="OLDER_COUNT" jdbcType="INTEGER" property="olderCount" />
+		<result column="CHILDREN_AGE_RANGE" jdbcType="VARCHAR"
+			property="childrenAgeRange" />
+		<result column="OLDER_AGE_RANGE" jdbcType="VARCHAR" property="olderAgeRange" />
+		<result column="SELF_CARES" jdbcType="VARCHAR" property="selfCares" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		CUSTOMER_ID, TENANT_ID, CUSTOMER_MOBILE, CUSTOMER_NAME, SEX, CONTACT_MOBILE,
+		CONTACT_ADDRESS,
+		AGE_RANGE, remarks, is_usable, add_time, add_account, modify_time,
+		modify_account,
+		HOUSE_TYPE, HOUSE_AREA, FAMILY_COUNT, CHILDREN_COUNT, OLDER_COUNT,
+		CHILDREN_AGE_RANGE,
+		OLDER_AGE_RANGE, SELF_CARES
+	</sql>
+
+	<insert id="insert"
+		parameterType="com.fbee.modules.mybatis.entity.TenantsCustomersBaseEntity">
+		insert into tenants_customers_base
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="customerId != null">
+				CUSTOMER_ID,
+			</if>
+			<if test="tenantId != null">
+				TENANT_ID,
+			</if>
+			<if test="customerMobile != null">
+				CUSTOMER_MOBILE,
+			</if>
+			<if test="customerName != null">
+				CUSTOMER_NAME,
+			</if>
+			<if test="sex != null">
+				SEX,
+			</if>
+			<if test="contactMobile != null">
+				CONTACT_MOBILE,
+			</if>
+			<if test="contactAddress != null">
+				CONTACT_ADDRESS,
+			</if>
+			<if test="ageRange != null">
+				AGE_RANGE,
+			</if>
+			<if test="remarks != null">
+				remarks,
+			</if>
+			<if test="isUsable != null">
+				is_usable,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="addAccount != null">
+				add_account,
+			</if>
+			<if test="modifyTime != null">
+				modify_time,
+			</if>
+			<if test="modifyAccount != null">
+				modify_account,
+			</if>
+			<if test="houseType != null">
+				HOUSE_TYPE,
+			</if>
+			<if test="houseArea != null">
+				HOUSE_AREA,
+			</if>
+			<if test="familyCount != null">
+				FAMILY_COUNT,
+			</if>
+			<if test="childrenCount != null">
+				CHILDREN_COUNT,
+			</if>
+			<if test="olderCount != null">
+				OLDER_COUNT,
+			</if>
+			<if test="childrenAgeRange != null">
+				CHILDREN_AGE_RANGE,
+			</if>
+			<if test="olderAgeRange != null">
+				OLDER_AGE_RANGE,
+			</if>
+			<if test="selfCares != null">
+				SELF_CARES,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="customerId != null">
+				#{customerId,jdbcType=INTEGER},
+			</if>
+			<if test="tenantId != null">
+				#{tenantId,jdbcType=INTEGER},
+			</if>
+			<if test="customerMobile != null">
+				#{customerMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="customerName != null">
+				#{customerName,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				#{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="contactMobile != null">
+				#{contactMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="contactAddress != null">
+				#{contactAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="ageRange != null">
+				#{ageRange,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null">
+				#{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="isUsable != null">
+				#{isUsable,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="addAccount != null">
+				#{addAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				#{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyAccount != null">
+				#{modifyAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="houseType != null">
+				#{houseType,jdbcType=VARCHAR},
+			</if>
+			<if test="houseArea != null">
+				#{houseArea,jdbcType=DECIMAL},
+			</if>
+			<if test="familyCount != null">
+				#{familyCount,jdbcType=INTEGER},
+			</if>
+			<if test="childrenCount != null">
+				#{childrenCount,jdbcType=INTEGER},
+			</if>
+			<if test="olderCount != null">
+				#{olderCount,jdbcType=INTEGER},
+			</if>
+			<if test="childrenAgeRange != null">
+				#{childrenAgeRange,jdbcType=VARCHAR},
+			</if>
+			<if test="olderAgeRange != null">
+				#{olderAgeRange,jdbcType=VARCHAR},
+			</if>
+			<if test="selfCares != null">
+				#{selfCares,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="update"
+		parameterType="com.fbee.modules.mybatis.entity.TenantsCustomersBaseEntity">
+		update tenants_customers_base
+		<set>
+			<if test="tenantId != null">
+				TENANT_ID = #{tenantId,jdbcType=INTEGER},
+			</if>
+			<if test="customerMobile != null">
+				CUSTOMER_MOBILE = #{customerMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="customerName != null">
+				CUSTOMER_NAME = #{customerName,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				SEX = #{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="contactMobile != null">
+				CONTACT_MOBILE = #{contactMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="contactAddress != null">
+				CONTACT_ADDRESS = #{contactAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="ageRange != null">
+				AGE_RANGE = #{ageRange,jdbcType=VARCHAR},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks,jdbcType=VARCHAR},
+			</if>
+			<if test="isUsable != null">
+				is_usable = #{isUsable,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="addAccount != null">
+				add_account = #{addAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyAccount != null">
+				modify_account = #{modifyAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="houseType != null">
+				HOUSE_TYPE = #{houseType,jdbcType=VARCHAR},
+			</if>
+			<if test="houseArea != null">
+				HOUSE_AREA = #{houseArea,jdbcType=DECIMAL},
+			</if>
+			<if test="familyCount != null">
+				FAMILY_COUNT = #{familyCount,jdbcType=INTEGER},
+			</if>
+			<if test="childrenCount != null">
+				CHILDREN_COUNT = #{childrenCount,jdbcType=INTEGER},
+			</if>
+			<if test="olderCount != null">
+				OLDER_COUNT = #{olderCount,jdbcType=INTEGER},
+			</if>
+			<if test="childrenAgeRange != null">
+				CHILDREN_AGE_RANGE = #{childrenAgeRange,jdbcType=VARCHAR},
+			</if>
+			<if test="olderAgeRange != null">
+				OLDER_AGE_RANGE = #{olderAgeRange,jdbcType=VARCHAR},
+			</if>
+			<if test="selfCares != null">
+				SELF_CARES = #{selfCares,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where CUSTOMER_ID = #{customerId,jdbcType=INTEGER}
+	</update>
+</mapper>

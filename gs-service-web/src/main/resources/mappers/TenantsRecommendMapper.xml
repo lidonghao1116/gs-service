@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fbee.modules.mybatis.dao.TenantsRecommendMapper">
+	<resultMap id="BaseResultMap"
+		type="com.fbee.modules.mybatis.entity.TenantsRecommendEntity">
+		<id column="ID" jdbcType="INTEGER" property="id" />
+		<result column="TENANT_ID" jdbcType="INTEGER" property="tenantId" />
+		<result column="STAFF_ID" jdbcType="INTEGER" property="staffId" />
+		<result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+		<result column="add_account" jdbcType="VARCHAR" property="addAccount" />
+		<result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+		<result column="modify_account" jdbcType="VARCHAR" property="modifyAccount" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ID, TENANT_ID, STAFF_ID, add_time, add_account,
+		modify_time,
+		modify_account
+	</sql>
+
+	<insert id="insert"
+		parameterType="com.fbee.modules.mybatis.entity.TenantsRecommendEntity">
+		insert into tenants_recommend
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="tenantId != null">
+				TENANT_ID,
+			</if>
+			<if test="staffId != null">
+				STAFF_ID,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="addAccount != null">
+				add_account,
+			</if>
+			<if test="modifyTime != null">
+				modify_time,
+			</if>
+			<if test="modifyAccount != null">
+				modify_account,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="tenantId != null">
+				#{tenantId,jdbcType=INTEGER},
+			</if>
+			<if test="staffId != null">
+				#{staffId,jdbcType=INTEGER},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="addAccount != null">
+				#{addAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				#{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyAccount != null">
+				#{modifyAccount,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="update"
+		parameterType="com.fbee.modules.mybatis.entity.TenantsRecommendEntity">
+		update tenants_recommend
+		<set>
+			<if test="tenantId != null">
+				TENANT_ID = #{tenantId,jdbcType=INTEGER},
+			</if>
+			<if test="staffId != null">
+				STAFF_ID = #{staffId,jdbcType=INTEGER},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="addAccount != null">
+				add_account = #{addAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyAccount != null">
+				modify_account = #{modifyAccount,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<select id="getRecomMendListByTenantId" parameterType="java.lang.Integer"
+		resultType="java.util.Map">
+		SELECT
+		a.STAFF_ID "staffId",
+		b.STAFF_NAME "staffName",
+		b.HEAD_IMAGE "headImage",
+		b.AGE "age",
+		b.ZODIAC "zodiac",
+		b.SEX "sex",
+		b.NATIVE_PLACE "nativePlace",
+		b.EDUCARION "educarion",
+		b.SPECIALTY "specialty",
+		b.CONSTELLATION "constellation",
+		b.WORK_STATUS "workStatus",
+		e.EXPERIENCE "experience",
+		(select group_concat(dt.value) from dictionarys dt,tenants_staff_ser_items ssi where ssi.SERVICE_ITEM_CODE=dt.`code` and dt.parent_id=1 and ssi.staff_id=a.staff_id   and ssi.is_usable='1')  "serviceItemName",
+		e.characer_feature "characerFeature",
+		e.price,
+		e.unit
+		FROM
+		tenants_recommend a,
+		tenants_staffs_info b,
+		tenants_staff_job_info e
+		WHERE
+		a.STAFF_ID = b.STAFF_ID
+		AND a.TENANT_ID = b.TENANT_ID
+		AND a.STAFF_ID = e.STAFF_ID
+		AND a.TENANT_ID = #{tenantId,jdbcType=INTEGER}
+		AND b.ON_OFF_SHELF='1'
+		ORDER BY
+		a.add_time DESC
+		LIMIT 2
+	</select>
+</mapper>

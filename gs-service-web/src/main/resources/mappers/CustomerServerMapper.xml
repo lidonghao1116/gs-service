@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fbee.modules.mybatis.dao.CustomerServerMapper">
+
+	<sql id="Base_Column_List_Job">
+		a.WEBSITE_NAME "websiteName",
+		b.POSITION_NAME "positionName",
+		b.SERVICE_PROVINCE "privince",
+		b.SERVICE_CITY "city",
+		a.area "area",
+		b.DEMAND "demand",
+		b.SALARY "salary",
+		b.SERVICE_TYPE'serviceType',
+		a.WEBSITE_URL "websiteUrl",
+		a.DOMAIN "domain",
+		b.age "age",
+		a.TENANTS_PHONE "contactPhone",
+		DATE_FORMAT(b.add_time,'%Y-%m-%d') "addDate"
+	</sql>
+	<select id="queryJob"  parameterType="java.util.Map" resultType="java.util.Map">
+		select
+		a.WEBSITE_NAME "websiteName",
+		b.POSITION_NAME "positionName",
+		b.SERVICE_PROVINCE "privince",
+		b.SERVICE_CITY "city",
+		b.SERVICE_AREA "area",
+		b.DEMAND "demand",
+		b.SALARY "salary",
+		b.SERVICE_TYPE'serviceType',
+		a.WEBSITE_URL "websiteUrl",
+		a.DOMAIN "domain",
+		b.age "age",
+		a.TENANTS_PHONE "contactPhone",
+		DATE_FORMAT(b.add_time,'%Y-%m-%d') "addDate",
+		DATE_FORMAT(b.modify_time,'%Y-%m-%d') "modifyTime",
+		b.contact_name "loginName",
+		b.contact_phone "telephone",
+		ems_sign "emsSign",
+		SALARY_TYPE "salaryType"
+		from
+		tenants_jobs b left join tenants_apps a on  b.TENANT_ID = a.TENANT_ID left join tenants_users u on b.tenant_user_id = u.id
+		where
+		a.is_usable = 1
+		AND b.status = 1
+		<if test="privince !=null and privince !=''">
+			AND	b.SERVICE_PROVINCE=#{privince,jdbcType=VARCHAR}
+		</if>
+		<if test="city !=null and city !=''">
+			AND	b.SERVICE_CITY=#{city,jdbcType=VARCHAR}
+		</if>
+		<if test="area !=null and area !=''">
+			AND	b.SERVICE_AREA=#{area,jdbcType=VARCHAR}
+		</if>
+		<if test="serviceType !=null and serviceType !=''">
+			AND	b.SERVICE_TYPE=#{serviceType,jdbcType=VARCHAR}
+		</if>
+
+		<if test="cxbs == 1">
+			AND	b.SALARY &lt; #{beginSalary,jdbcType=VARCHAR}
+		</if>
+		<if test="cxbs == 2">
+			AND	b.SALARY &gt;= #{beginSalary,jdbcType=VARCHAR}
+			AND	b.SALARY &lt;= #{endSalary,jdbcType=VARCHAR}
+		</if>
+		<if test="cxbs == 3">
+			AND	b.SALARY &gt; #{beginSalary,jdbcType=VARCHAR}
+		</if>
+
+		<if test="age !=null and age !=''">
+			AND	b.AGE=#{age,jdbcType=VARCHAR}
+		</if>
+
+		<if test="salaryType !=null and salaryType !=''">
+			<if test="salaryType == '01' ">
+				AND	b.salary_type in ("01","02")
+			</if>
+			<if test="salaryType != '01' ">
+				AND	b.salary_type = #{salaryType,jdbcType=VARCHAR}
+			</if>
+		</if>
+
+
+		ORDER BY b.modify_time DESC
+		LIMIT 0,100
+	</select>
+
+	<!-- 找工作查询条件 -->
+	<sql id="queryJobCondition">
+		<if test="sserviceType!=null and serviceType!=''">
+			and b.SERVICE_TYPE = #{serviceType,jdbcType=VARCHAR}
+		</if>
+	</sql>
+
+	<select id="queryJobCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select
+		COUNT(1)
+		from
+		tenants_jobs b
+		where
+		 b.status = 1
+		<if test="privince !=null and privince !=''">
+			AND	b.SERVICE_PROVINCE=#{privince,jdbcType=VARCHAR}
+		</if>
+		<if test="city !=null and city !=''">
+			AND	b.SERVICE_CITY=#{city,jdbcType=VARCHAR}
+		</if>
+		<if test="area !=null and area !=''">
+			AND	b.SERVICE_AREA=#{area,jdbcType=VARCHAR}
+		</if>
+		<if test="serviceType !=null and serviceType !=''">
+			AND	b.SERVICE_TYPE=#{serviceType,jdbcType=VARCHAR}
+		</if>
+
+		<if test="cxbs == 1">
+			AND	b.SALARY &lt; #{beginSalary,jdbcType=VARCHAR}
+		</if>
+		<if test="cxbs == 2">
+			AND	b.SALARY &gt;= #{beginSalary,jdbcType=VARCHAR}
+			AND	b.SALARY &lt;= #{endSalary,jdbcType=VARCHAR}
+		</if>
+		<if test="cxbs == 3">
+			AND	b.SALARY &gt; #{beginSalary,jdbcType=VARCHAR}
+		</if>
+
+		<if test="age !=null and age !=''">
+			AND	(b.AGE=#{age,jdbcType=VARCHAR} or b.AGE = "00")
+		</if>
+
+		<if test="salaryType !=null and salaryType !=''">
+			<if test="salaryType == '01' ">
+				AND	b.salary_type in ("01","02")
+			</if>
+			<if test="salaryType != '01' ">
+				AND	b.salary_type = #{salaryType,jdbcType=VARCHAR}
+			</if>
+		</if>
+
+	</select>
+
+	<!-- 分页的查询租户招聘信息  -->
+
+	<select id="queryJobLimit" parameterType="java.util.Map" resultType="java.util.Map">
+		select
+		a.WEBSITE_NAME "websiteName",
+		b.POSITION_NAME "positionName",
+		b.SERVICE_PROVINCE "privince",
+		b.SERVICE_CITY "city",
+		b.SERVICE_AREA "area",
+		b.DEMAND "demand",
+		b.SALARY "salary",
+		b.SERVICE_TYPE'serviceType',
+		a.WEBSITE_URL "websiteUrl",
+		a.DOMAIN "domain",
+		b.age "age",
+		a.TENANTS_PHONE "contactPhone",
+		DATE_FORMAT(b.add_time,'%Y-%m-%d') "addDate",
+		DATE_FORMAT(b.modify_time,'%Y-%m-%d') "modifyTime",
+		b.contact_name "loginName",
+		b.contact_phone "telephone",
+		ems_sign "emsSign",
+		SALARY_TYPE "salaryType"
+		from
+		tenants_jobs b left join tenants_apps a on  b.TENANT_ID = a.TENANT_ID
+		where
+		 b.status = 1
+		<if test="privince !=null and privince !=''">
+			AND	b.SERVICE_PROVINCE=#{privince,jdbcType=VARCHAR}
+		</if>
+		<if test="city !=null and city !=''">
+			AND	b.SERVICE_CITY=#{city,jdbcType=VARCHAR}
+		</if>
+		<if test="area !=null and area !=''">
+			AND	b.SERVICE_AREA=#{area,jdbcType=VARCHAR}
+		</if>
+		<if test="serviceType !=null and serviceType !=''">
+			AND	b.SERVICE_TYPE=#{serviceType,jdbcType=VARCHAR}
+		</if>
+
+		<if test="cxbs == 1">
+			AND	b.SALARY &lt; #{beginSalary,jdbcType=VARCHAR}
+		</if>
+		<if test="cxbs == 2">
+			AND	b.SALARY &gt;= #{beginSalary,jdbcType=VARCHAR}
+			AND	b.SALARY &lt;= #{endSalary,jdbcType=VARCHAR}
+		</if>
+		<if test="cxbs == 3">
+			AND	b.SALARY &gt; #{beginSalary,jdbcType=VARCHAR}
+		</if>
+
+		<if test="age !=null and age !=''">
+			AND	(b.AGE=#{age,jdbcType=VARCHAR} or b.AGE = "00")
+
+		</if>
+
+		<if test="salaryType !=null and salaryType !=''">
+			<if test="salaryType == '01' ">
+				AND	b.salary_type in ("01","02")
+			</if>
+			<if test="salaryType != '01' ">
+				AND	b.salary_type = #{salaryType,jdbcType=VARCHAR}
+			</if>
+		</if>
+
+		ORDER BY b.modify_time DESC
+		LIMIT #{offset},#{pageSize}
+	</select>
+
+	<!-- 找服务 -->
+	<sql id="Base_Column_List_Company">
+		a.WEBSITE_NAME "websiteName",
+		a.WEBSITE_LOGO "websiteLogo",
+		a.privince "privince",
+		a.city "city",
+		a.area "area",
+		a.WEBSITE_URL "websiteUrl",
+		a.DOMAIN "domain",
+		GROUP_CONCAT(b.SERVICE_ITEM_CODE) "serviceCode"
+	</sql>
+
+	<select id="queryNearbyCompany"  resultType="java.util.Map">
+		select
+		<include refid="Base_Column_List_Company"/>
+		FROM
+		tenants_apps a,
+		tenants_service_items b
+		where a.TENANT_ID = b.TENANT_ID
+		AND a.is_usable = 1
+		AND b.IS_SHOW = 1
+		GROUP BY a.TENANT_ID DESC
+		LIMIT 0,30
+	</select>
+	<sql id="queryCompanyCondition">
+		<if test="privince!=null and privince!=''">
+			AND a.privince = #{privince}
+		</if>
+		<if test="city!=null and city!=''">
+			AND a.city = #{city}
+		</if>
+		<if test="area!=null and area!=''">
+			AND a.area = #{area}
+		</if>
+	</sql>
+	<select id="queryNearbyCompanyCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT
+		count(1)
+		FROM(
+		select
+		COUNT(1)
+		FROM
+		tenants_apps a,
+		tenants_service_items b
+		where a.TENANT_ID = b.TENANT_ID
+		AND a.is_usable = 1
+		AND b.IS_SHOW = 1
+		<include refid="queryCompanyCondition"/>
+		GROUP BY a.add_time DESC
+		) a
+	</select>
+	<select id="queryNearbyCompanyLimit" parameterType="java.util.Map" resultType="java.util.Map">
+		select
+		<include refid="Base_Column_List_Company"/>
+		FROM
+		tenants_apps a,
+		tenants_service_items b
+		where a.TENANT_ID = b.TENANT_ID
+		AND a.is_usable = 1
+		AND b.IS_SHOW = 1
+		<include refid="queryCompanyCondition"/>
+		GROUP BY a.add_time DESC
+		LIMIT #{offset},#{pageSize}
+	</select>
+</mapper>

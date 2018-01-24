@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fbee.modules.mybatis.dao.ReserveOrdersMapper">
+	<resultMap id="BaseResultMap" type="com.fbee.modules.mybatis.entity.ReserveOrdersEntity">
+		<id column="ORDER_NO" jdbcType="VARCHAR" property="orderNo" />
+		<result column="TENANT_ID" jdbcType="INTEGER" property="tenantId" />
+		<result column="MEMBER_ID" jdbcType="INTEGER" property="memberId" />
+		<result column="MEMBER_MOBILE" jdbcType="VARCHAR" property="memberMobile" />
+		<result column="MEMBER_NAME" jdbcType="VARCHAR" property="memberName" />
+		<result column="MEMBER_SEX" jdbcType="VARCHAR" property="memberSex" />
+		<result column="STAFF_ID" jdbcType="INTEGER" property="staffId" />
+		<result column="SERVICE_ITEM_CODE" jdbcType="VARCHAR" property="serviceItemCode" />
+		<result column="STAFF_SER_ITEM_ID" jdbcType="VARCHAR" property="staffSerItemId" />
+		<result column="ORDER_TIME" jdbcType="TIMESTAMP" property="orderTime" />
+		<result column="ORDER_STATUS" jdbcType="VARCHAR" property="orderStatus" />
+		<result column="HANDLE_ORDER_TIME" jdbcType="TIMESTAMP" property="handleOrderTime" />
+	</resultMap>
+	<resultMap id="OrderWithStaffResultMap" extends="BaseResultMap" type="com.fbee.modules.mybatis.entity.ReserveOrdersEntity">
+		<association property="staffInfo" column="STAFF_ID" javaType="com.fbee.modules.mybatis.model.StaffSnapShotInfo"
+					 select="com.fbee.modules.mybatis.dao.TenantsStaffsInfoMapper.getSnapshotById" />
+		<association property="orderCustomer" column="ORDER_NO" javaType="com.fbee.modules.mybatis.model.ReserveOrdersCustomerInfo"
+					 select="com.fbee.modules.mybatis.dao.ReserveOrdersCustomerInfoMapper.selectByPrimaryKey" />
+		<association property="tenantInfo" column="TENANT_ID" javaType="com.fbee.modules.mybatis.model.TenantsSnapshotInfo"
+					 select="com.fbee.modules.mybatis.dao.TenantsAppsMapper.getSnapshotById" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		ORDER_NO, TENANT_ID, MEMBER_ID, MEMBER_MOBILE, MEMBER_NAME, MEMBER_SEX,
+		STAFF_ID,
+		SERVICE_ITEM_CODE,STAFF_SER_ITEM_ID, ORDER_TIME, ORDER_STATUS, HANDLE_ORDER_TIME
+	</sql>
+
+
+	<select id="getById" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"></include>
+		from reserve_orders
+		where ORDER_NO = #{orderNo}
+	</select>
+
+	<insert id="insert" parameterType="com.fbee.modules.mybatis.entity.ReserveOrdersEntity">
+		insert into reserve_orders
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orderNo != null">
+				ORDER_NO,
+			</if>
+			<if test="tenantId != null">
+				TENANT_ID,
+			</if>
+			<if test="memberId != null">
+				MEMBER_ID,
+			</if>
+			<if test="memberMobile != null">
+				MEMBER_MOBILE,
+			</if>
+			<if test="memberName != null">
+				MEMBER_NAME,
+			</if>
+			<if test="memberSex != null">
+				MEMBER_SEX,
+			</if>
+			<if test="staffSerItemId != null">
+				STAFF_SER_ITEM_ID,
+			</if>
+			<if test="staffId != null">
+				STAFF_ID,
+			</if>
+			<if test="serviceItemCode != null">
+				SERVICE_ITEM_CODE,
+			</if>
+			<if test="orderTime != null">
+				ORDER_TIME,
+			</if>
+			<if test="orderStatus != null">
+				ORDER_STATUS,
+			</if>
+			<if test="handleOrderTime != null">
+				HANDLE_ORDER_TIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="orderNo != null">
+				#{orderNo,jdbcType=VARCHAR},
+			</if>
+			<if test="tenantId != null">
+				#{tenantId,jdbcType=INTEGER},
+			</if>
+			<if test="memberId != null">
+				#{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="memberMobile != null">
+				#{memberMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="memberName != null">
+				#{memberName,jdbcType=VARCHAR},
+			</if>
+			<if test="memberSex != null">
+				#{memberSex,jdbcType=VARCHAR},
+			</if>
+			<if test="staffSerItemId != null">
+				#{staffSerItemId,jdbcType=INTEGER},
+			</if>
+			<if test="staffId != null">
+				#{staffId,jdbcType=INTEGER},
+			</if>
+			<if test="serviceItemCode != null">
+				#{serviceItemCode,jdbcType=VARCHAR},
+			</if>
+			<if test="orderTime != null">
+				#{orderTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orderStatus != null">
+				#{orderStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="handleOrderTime != null">
+				#{handleOrderTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="update" parameterType="com.fbee.modules.mybatis.entity.ReserveOrdersEntity">
+		update reserve_orders
+		<set>
+			<if test="tenantId != null">
+				TENANT_ID = #{tenantId,jdbcType=INTEGER},
+			</if>
+			<if test="memberId != null">
+				MEMBER_ID = #{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="memberMobile != null">
+				MEMBER_MOBILE = #{memberMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="memberName != null">
+				MEMBER_NAME = #{memberName,jdbcType=VARCHAR},
+			</if>
+			<if test="memberSex != null">
+				MEMBER_SEX = #{memberSex,jdbcType=VARCHAR},
+			</if>
+			<if test="staffSerItemId != null">
+				STAFF_SER_ITEM_ID = #{staffSerItemId,jdbcType=INTEGER},
+			</if>
+			<if test="staffId != null">
+				STAFF_ID = #{staffId,jdbcType=INTEGER},
+			</if>
+			<if test="serviceItemCode != null">
+				SERVICE_ITEM_CODE = #{serviceItemCode,jdbcType=VARCHAR},
+			</if>
+			<if test="orderTime != null">
+				ORDER_TIME = #{orderTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orderStatus != null">
+				ORDER_STATUS = #{orderStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="handleOrderTime != null">
+				HANDLE_ORDER_TIME = #{handleOrderTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where ORDER_NO = #{orderNo,jdbcType=VARCHAR}
+	</update>
+	
+	 <select id="getCount" parameterType="java.lang.Integer" resultType="java.lang.String">
+  		select count(1)
+  		from reserve_orders
+  		where MEMBER_ID = #{userId} and ORDER_STATUS='01'
+  	</select>
+  	
+  	<update id="cancelReserveOrder">
+  		update reserve_orders
+  		set ORDER_STATUS = '03', cancel_reason=#{cancelReason}
+  		where ORDER_NO = #{orderNo}
+  	</update>
+  	
+  	<select id="getReserveOrdersCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+  		select count(0)
+  		from reserve_orders
+  		where MEMBER_ID = #{memberid}
+  		<if test="orderstatus != null">
+  		 and ORDER_STATUS = #{orderstatus}
+  		</if>
+  	</select>
+  	
+  	<select id="reserveOrderDetails" parameterType="java.lang.String" resultType="java.util.Map">
+		select 
+			a.ORDER_NO "orderNo",
+			a.MEMBER_MOBILE "memberMobile",
+			a.MEMBER_NAME "memberName",
+			a.ORDER_STATUS "orderStatus",
+			DATE_FORMAT(a.ORDER_TIME,'%Y-%m-%d %H:%i:%s') "orderTime",
+			a.STAFF_ID "staffId",
+			a.TENANT_ID "tenantId",
+			a.SERVICE_ITEM_CODE "serviceItemCode",
+			b.SERVICE_PRICE_UNIT "servicePriceUnit",
+			a.STAFF_SER_ITEM_ID "staffSerItemId"
+		from reserve_orders a, tenants_service_items b
+		where
+			   a.ORDER_NO=#{orderNo}
+		AND   a.TENANT_ID=b.TENANT_ID
+		AND   a.SERVICE_ITEM_CODE=b.SERVICE_ITEM_CODE
+	</select>
+  	
+  	<select id="getReserveOrdersList" parameterType="java.util.Map" resultMap="BaseResultMap">
+  		select
+		<include refid="Base_Column_List"></include>
+		from reserve_orders
+		where MEMBER_ID = #{memberid}
+		<if test="orderstatus != null">
+  		 and ORDER_STATUS = #{orderstatus}
+  		</if>
+  		order by ORDER_TIME DESC
+  		limit #{pageNumber},#{pageSize}
+  	</select>
+
+	<select id="getReserveWithStaffList" parameterType="java.util.Map" resultMap="OrderWithStaffResultMap">
+		select
+		<include refid="Base_Column_List"></include>
+		from reserve_orders
+		where MEMBER_ID = #{memberid}
+		and ORDER_STATUS = #{orderstatus}
+		order by ORDER_TIME DESC
+		limit #{pageNumber},#{pageSize}
+	</select>
+
+	<select id="getWithStaffByOrderNo" parameterType="java.lang.String" resultMap="OrderWithStaffResultMap">
+		select
+		<include refid="Base_Column_List"></include>
+		from reserve_orders
+		where order_no = #{orderNo}
+	</select>
+
+
+</mapper>

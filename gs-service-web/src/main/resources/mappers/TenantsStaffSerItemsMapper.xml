@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fbee.modules.mybatis.dao.TenantsStaffSerItemsMapper">
+	<resultMap id="BaseResultMap"
+		type="com.fbee.modules.mybatis.entity.TenantsStaffSerItemsEntity">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="STAFF_ID" jdbcType="INTEGER" property="staffId" />
+		<result column="TENANT_ID" jdbcType="INTEGER" property="tenantId" />
+		<result column="SERVICE_ITEM_CODE" jdbcType="VARCHAR" property="serviceItemCode" />
+		<result column="SKILLS" jdbcType="VARCHAR" property="skills" />
+		<result column="is_usable" jdbcType="VARCHAR" property="isUsable" />
+		<result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+		<result column="add_account" jdbcType="VARCHAR" property="addAccount" />
+		<result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+		<result column="modify_account" jdbcType="VARCHAR" property="modifyAccount" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,STAFF_ID, TENANT_ID, SERVICE_ITEM_CODE,
+		SKILLS, is_usable,add_time,
+		add_account,
+		modify_time, modify_account
+	</sql>
+
+	<select id="getStaffServiceItemsByKey"
+		parameterType="com.fbee.modules.mybatis.model.TenantsStaffSerItemsKey"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tenants_staff_ser_items
+		where STAFF_ID = #{staffId,jdbcType=INTEGER}
+		and TENANT_ID = #{tenantId,jdbcType=INTEGER}
+		and SERVICE_ITEM_CODE = #{serviceItemCode,jdbcType=VARCHAR}
+		and is_usable = '1'
+	</select>
+	
+	<select id="reserveOrderDetails" parameterType="java.util.Map" resultType="java.util.Map">
+		select
+		<include refid="Base_Column_List"></include>
+		from tenants_staff_ser_items
+		where STAFF_ID = #{staffid}
+		and TENANT_ID = #{tenantid}
+	</select>
+	
+	<select id="reserveOrderDetail" parameterType="java.util.Map" resultType="java.util.Map">
+		select
+		<include refid="Base_Column_List"></include>
+		from tenants_staff_ser_items
+		where id = #{staffSerItemId}
+	</select>
+	
+
+	<select id="getStaffServiceItems"
+		parameterType="com.fbee.modules.mybatis.entity.TenantsStaffSerItemsEntity"
+		resultMap="BaseResultMap">
+		select
+		STAFF_ID, TENANT_ID, SERVICE_ITEM_CODE
+		from
+		tenants_staff_ser_items
+		where STAFF_ID = #{staffId,jdbcType=INTEGER}
+		and TENANT_ID = #{tenantId,jdbcType=INTEGER}
+	</select>
+	
+	<insert id="insert"
+		parameterType="com.fbee.modules.mybatis.entity.TenantsStaffSerItemsEntity">
+		insert into tenants_staff_ser_items
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="staffId != null">
+				STAFF_ID,
+			</if>
+			<if test="tenantId != null">
+				TENANT_ID,
+			</if>
+			<if test="serviceItemCode != null">
+				SERVICE_ITEM_CODE,
+			</if>
+			<if test="skills != null">
+				SKILLS,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="addAccount != null">
+				add_account,
+			</if>
+			<if test="modifyTime != null">
+				modify_time,
+			</if>
+			<if test="modifyAccount != null">
+				modify_account,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="staffId != null">
+				#{staffId,jdbcType=INTEGER},
+			</if>
+			<if test="tenantId != null">
+				#{tenantId,jdbcType=INTEGER},
+			</if>
+			<if test="serviceItemCode != null">
+				#{serviceItemCode,jdbcType=VARCHAR},
+			</if>
+			<if test="skills != null">
+				#{skills,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="addAccount != null">
+				#{addAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				#{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyAccount != null">
+				#{modifyAccount,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="update"
+		parameterType="com.fbee.modules.mybatis.entity.TenantsStaffSerItemsEntity">
+		update tenants_staff_ser_items
+		<set>
+			<if test="skills != null">
+				SKILLS = #{skills,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="addAccount != null">
+				add_account = #{addAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyAccount != null">
+				modify_account = #{modifyAccount,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where STAFF_ID = #{staffId,jdbcType=INTEGER}
+		and TENANT_ID =
+		#{tenantId,jdbcType=INTEGER}
+		and SERVICE_ITEM_CODE =
+		#{serviceItemCode,jdbcType=VARCHAR}
+	</update>
+		<select id="getServiceItemsByStaffId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tenants_staff_ser_items
+		where STAFF_ID = #{staffId,jdbcType=INTEGER}
+	</select>
+	<select id="getStaffServiceInfo" parameterType="java.lang.Integer" resultType="java.util.Map">
+		SELECT
+		a.STAFF_ID "staffId",
+		a.TENANT_ID "tenantId",
+		a.SERVICE_ITEM_CODE "serviceItemCode",
+		a.SKILLS "skills",
+		a.SERVICE_NATURE "serviceNature",
+		c.WORK_STATUS "workStatus"
+		from
+		TENANTS_STAFF_SER_ITEMS a,
+		TENANTS_STAFFS_INFO c
+		where
+		c.STAFF_ID=#{value,jdbcType=INTEGER}
+		and a.is_usable='1'
+		and a.staff_id = c.staff_id
+	</select>
+
+
+	<select id="getStaffServiceItemsByIds"
+			parameterType="java.lang.Integer"
+			resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tenants_staff_ser_items
+		where id = #{stafffSerItemId,jdbcType=INTEGER}
+	</select>
+</mapper>

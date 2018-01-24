@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fbee.modules.mybatis.dao.MemberAddressInfoMapper">
+
+  <resultMap id="BaseResultMap" type="com.fbee.modules.bean.MemberAddressInfo">
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR"/>
+    <result column="zip_code" property="zipCode" jdbcType="VARCHAR"/>
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="district" property="district" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="is_usable" property="isUsable" jdbcType="VARCHAR" />
+    <result column="is_default" property="isDefault" jdbcType="VARCHAR" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="add_account" property="addAccount" jdbcType="VARCHAR" />
+    <result column="modifyAccount" property="modifyAccount" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, member_id, type, user_name, phone, zip_code, country, province, city, address, district,
+    area, is_usable, is_default, add_time, modify_time, add_account, modify_account
+  </sql>
+
+  <select id="getById" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from
+      member_addresses
+    where
+          is_usable = 1
+      and id = #{id}
+      and member_id = #{memberId}
+  </select>
+  <select id="findList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from
+    member_addresses
+    where
+    is_usable = 1
+    and member_id = #{value} 
+    order by modify_time desc 
+  </select>
+  <select id="count" parameterType="java.lang.Integer" resultType="int">
+    select count(1) from member_addresses
+    where
+      is_usable = 1
+      and member_id = #{value}
+  </select>
+
+  <insert id="insert" parameterType="com.fbee.modules.bean.MemberAddressInfo" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO `member_addresses`
+    (`id`, `member_id`, `type`, `user_name`, `phone`, `zip_code`, `country`, `province`, `city`, `address`, `district`, `area`,  `add_account`, `modify_time`)
+    VALUES
+    (#{id}, #{memberId}, #{type}, #{userName}, #{phone}, #{zipCode}, #{country}, #{province}, #{city}, #{address}, #{district}, #{area}, #{addAccount}, now())
+  </insert>
+
+  <update id="update" parameterType="com.fbee.modules.bean.MemberAddressInfo">
+    update member_addresses
+    set
+      type      =  #{type},
+      user_name =  #{userName},
+      phone     =  #{phone},
+      zip_code  =  #{zipCode},
+      country   =  #{country},
+      province  =  #{province},
+      city      =  #{city},
+      address   =  #{address},
+      district  =  #{district},
+      area      =  #{area},
+      is_default = #{isDefault},
+      modify_account = #{modifyAccount},
+      modify_time    =  now()
+    where
+        id = #{id}
+    and member_id = #{memberId}
+  </update>
+
+  <update id="updateDefault">
+    update member_addresses set is_default = 0, modify_account = #{modifyAccount}, modify_time = now()
+      where is_default=1 and member_id = #{memberId};
+    update member_addresses set is_default = 1, modify_account = #{modifyAccount}, modify_time = now()
+      where id = #{id} and member_id = #{memberId};
+  </update>
+
+  <delete id="delete">
+    update member_addresses
+    set
+    is_usable =  0,
+    modify_account = #{modifyAccount},
+    modify_time    =  now()
+    where
+        id = #{id}
+    and member_id = #{memberId}
+  </delete>
+
+</mapper>

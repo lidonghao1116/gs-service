@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fbee.modules.mybatis.dao.TenantsTradeRecordsMapper">
+  <resultMap id="BaseResultMap" type="com.fbee.modules.mybatis.model.TenantsTradeRecords">
+    <id column="TRADE_NO" jdbcType="VARCHAR" property="tradeNo" />
+    <result column="TENANT_ID" jdbcType="INTEGER" property="tenantId" />
+    <result column="TRADE_TIME" jdbcType="TIMESTAMP" property="tradeTime" />
+    <result column="FINANCE_TYPE" jdbcType="VARCHAR" property="financeType" />
+    <result column="TRADE_AMOUNT" jdbcType="DECIMAL" property="tradeAmount" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="COUNTER_FEE" jdbcType="DECIMAL" property="counterFee" />
+    <result column="IN_OUT_NO" jdbcType="VARCHAR" property="inOutNo" />
+    <result column="TRADE_TYPE" jdbcType="VARCHAR" property="tradeType" />
+    <result column="REMARKS" jdbcType="VARCHAR" property="remarks" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="add_account" jdbcType="VARCHAR" property="addAccount" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="modify_account" jdbcType="VARCHAR" property="modifyAccount" />
+    <result column="is_usable" jdbcType="VARCHAR" property="isUsable" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    TRADE_NO, TENANT_ID, TRADE_TIME, FINANCE_TYPE, TRADE_AMOUNT, STATUS, COUNTER_FEE, 
+    IN_OUT_NO, TRADE_TYPE, REMARKS, add_time, add_account, modify_time, modify_account, 
+    is_usable
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tenants_trade_records
+    where TRADE_NO = #{tradeNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tenants_trade_records
+    where TRADE_NO = #{tradeNo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbee.modules.mybatis.model.TenantsTradeRecords">
+    insert into tenants_trade_records (ORDER_NO, TRADE_NO, TENANT_ID, TRADE_TIME,
+      FINANCE_TYPE, TRADE_AMOUNT, STATUS, 
+      COUNTER_FEE, IN_OUT_NO, TRADE_TYPE, 
+      REMARKS, add_time, add_account, 
+      modify_time, modify_account, is_usable
+      )
+    values (#{orderNo}, #{tradeNo,jdbcType=VARCHAR}, #{tenantId,jdbcType=INTEGER}, #{tradeTime,jdbcType=TIMESTAMP},
+      #{financeType,jdbcType=VARCHAR}, #{tradeAmount,jdbcType=DECIMAL}, #{status,jdbcType=VARCHAR}, 
+      #{counterFee,jdbcType=DECIMAL}, #{inOutNo,jdbcType=VARCHAR}, #{tradeType,jdbcType=VARCHAR}, 
+      #{remarks,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{addAccount,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{modifyAccount,jdbcType=VARCHAR}, #{isUsable,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbee.modules.mybatis.model.TenantsTradeRecords">
+    update tenants_trade_records
+    <set>
+      <if test="tenantId != null">
+        TENANT_ID = #{tenantId,jdbcType=INTEGER},
+      </if>
+      <if test="tradeTime != null">
+        TRADE_TIME = #{tradeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="financeType != null">
+        FINANCE_TYPE = #{financeType,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeAmount != null">
+        TRADE_AMOUNT = #{tradeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="counterFee != null">
+        COUNTER_FEE = #{counterFee,jdbcType=DECIMAL},
+      </if>
+      <if test="inOutNo != null">
+        IN_OUT_NO = #{inOutNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeType != null">
+        TRADE_TYPE = #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addAccount != null">
+        add_account = #{addAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyAccount != null">
+        modify_account = #{modifyAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="isUsable != null">
+        is_usable = #{isUsable,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TRADE_NO = #{tradeNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbee.modules.mybatis.model.TenantsTradeRecords">
+    update tenants_trade_records
+    set TENANT_ID = #{tenantId,jdbcType=INTEGER},
+      TRADE_TIME = #{tradeTime,jdbcType=TIMESTAMP},
+      FINANCE_TYPE = #{financeType,jdbcType=VARCHAR},
+      TRADE_AMOUNT = #{tradeAmount,jdbcType=DECIMAL},
+      STATUS = #{status,jdbcType=VARCHAR},
+      COUNTER_FEE = #{counterFee,jdbcType=DECIMAL},
+      IN_OUT_NO = #{inOutNo,jdbcType=VARCHAR},
+      TRADE_TYPE = #{tradeType,jdbcType=VARCHAR},
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      add_account = #{addAccount,jdbcType=VARCHAR},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      modify_account = #{modifyAccount,jdbcType=VARCHAR},
+      is_usable = #{isUsable,jdbcType=VARCHAR}
+    where TRADE_NO = #{tradeNo,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 向账户流水轨迹表中插入一条记录 -->
+ <insert id="insertRecords" parameterType="com.fbee.modules.mybatis.entity.TenantsTradeRecordsEntity">
+    insert into tenants_trade_records
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tradeNo != null">
+        TRADE_NO,
+      </if>
+      <if test="tenantId != null">
+        TENANT_ID,
+      </if>
+      <if test="tradeTime != null">
+        TRADE_TIME,
+      </if>
+      <if test="financeType != null">
+        FINANCE_TYPE,
+      </if>
+      <if test="tradeAmount != null">
+        TRADE_AMOUNT,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="counterFee != null">
+        COUNTER_FEE,
+      </if>
+      <if test="inOutNo != null">
+        IN_OUT_NO,
+      </if>
+      <if test="tradeType != null">
+        TRADE_TYPE,
+      </if>
+      <if test="remarks != null">
+        REMARKS,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="addAccount != null">
+        add_account,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+      <if test="modifyAccount != null">
+        modify_account,
+      </if>
+      <if test="isUsable != null">
+        is_usable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tradeNo != null">
+        #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantId != null">
+        #{tenantId,jdbcType=INTEGER},
+      </if>
+      <if test="tradeTime != null">
+        #{tradeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="financeType != null">
+        #{financeType,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeAmount != null">
+        #{tradeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="counterFee != null">
+        #{counterFee,jdbcType=DECIMAL},
+      </if>
+      <if test="inOutNo != null">
+        #{inOutNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeType != null">
+        #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addAccount != null">
+        #{addAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyAccount != null">
+        #{modifyAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="isUsable != null">
+        #{isUsable,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+<insert id="insertSelective" parameterType="com.fbee.modules.mybatis.model.TenantsTradeRecords">
+	 insert into tenants_trade_records
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tradeNo != null">
+        TRADE_NO,
+      </if>
+      <if test="tenantId != null">
+        TENANT_ID,
+      </if>
+      <if test="tradeTime != null">
+        TRADE_TIME,
+      </if>
+      <if test="financeType != null">
+        FINANCE_TYPE,
+      </if>
+      <if test="tradeAmount != null">
+        TRADE_AMOUNT,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="counterFee != null">
+        COUNTER_FEE,
+      </if>
+      <if test="inOutNo != null">
+        IN_OUT_NO,
+      </if>
+      <if test="tradeType != null">
+        TRADE_TYPE,
+      </if>
+      <if test="remarks != null">
+        REMARKS,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="addAccount != null">
+        add_account,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+      <if test="modifyAccount != null">
+        modify_account,
+      </if>
+      <if test="isUsable != null">
+        is_usable,
+      </if>
+      <if test="orderNo != null">
+        order_no,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tradeNo != null">
+        #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantId != null">
+        #{tenantId,jdbcType=INTEGER},
+      </if>
+      <if test="tradeTime != null">
+        #{tradeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="financeType != null">
+        #{financeType,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeAmount != null">
+        #{tradeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="counterFee != null">
+        #{counterFee,jdbcType=DECIMAL},
+      </if>
+      <if test="inOutNo != null">
+        #{inOutNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeType != null">
+        #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addAccount != null">
+        #{addAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyAccount != null">
+        #{modifyAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="isUsable != null">
+        #{isUsable,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+</insert>
+</mapper>

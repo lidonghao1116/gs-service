@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fbee.modules.mybatis.dao.TenantsJobResumesMapper">
+    <resultMap id="BaseResultMap" type="com.fbee.modules.mybatis.model.TenantsJobResume">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="order_no" jdbcType="VARCHAR" property="orderNo"/>
+        <result column="job_id" jdbcType="INTEGER" property="jobId"/>
+        <result column="job_tenant_id" jdbcType="INTEGER" property="jobTenantId"/>
+        <result column="job_tenant_user_id" jdbcType="INTEGER" property="jobTenantUserId"/>
+        <result column="resume_tenant_id" jdbcType="INTEGER" property="resumeTenantId"/>
+        <result column="resume_tenant_user_id" jdbcType="INTEGER" property="resumeTenantUserId"/>
+        <result column="resume_tenant_staff_id" jdbcType="INTEGER" property="resumeTenantStaffId"/>
+        <result column="apply_date" jdbcType="TIMESTAMP" property="applyDate"/>
+        <result column="check_date" jdbcType="TIMESTAMP" property="checkDate"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="deposit" jdbcType="DECIMAL" property="deposit"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
+        <result column="add_account" jdbcType="VARCHAR" property="addAccount"/>
+        <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime"/>
+        <result column="modify_account" jdbcType="VARCHAR" property="modifyAccount"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, order_no, job_id, job_tenant_id, job_tenant_user_id, resume_tenant_id, resume_tenant_user_id,
+        resume_tenant_staff_id, apply_date, check_date, status, remarks,deposit,
+        add_time,add_account, modify_time, modify_account
+    </sql>
+
+    <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tenants_job_resumes
+        where id = #{id}
+    </select>
+
+    <update id="update" parameterType="com.fbee.modules.mybatis.model.TenantsJobResume">
+        update tenants_job_resumes
+        <set>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="checkDate != null" >
+                check_date = #{checkDate},
+            </if>
+            <if test="remarks != null" >
+                remarks = #{remarks},
+            </if>
+            <if test="modifyAccount != null">
+                modify_account = #{modifyAccount},
+            </if>
+            modify_time = now()
+        </set>
+        where id = #{id}
+    </update>
+
+
+    <select id="getTenantsJobsResumesList" parameterType="com.fbee.modules.core.page.form.TenantJobResumeForm" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tenants_job_resumes
+        where is_usable = 1
+        <if test="orderNo != null"> and order_no = #{orderNo} </if>
+        <if test="jobId != null"> and job_id = #{jobId} </if>
+        <if test="jobTenantId != null"> and job_tenant_id = #{jobTenantId} </if>
+        <if test="jobTenantUserId != null"> and job_tenant_user_id = #{jobTenantUserId} </if>
+        <if test="status != null and status != '' "> and status = #{status} </if>
+        order by modify_time desc
+        limit #{offset},#{rowNum}
+    </select>
+
+    <select id="getMyResumesBoxList" parameterType="com.fbee.modules.core.page.form.TenantJobResumeForm" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tenants_job_resumes a
+        where is_usable = 1
+        <if test="orderNo != null and orderNo != ''"> and order_no = #{orderNo} </if>
+        <if test="jobId != null and jobId != ''"> and job_id = #{jobId} </if>
+        <if test="jobTenantId != null and jobTenantId != ''"> and job_tenant_id = #{jobTenantId} </if>
+        <if test="jobTenantUserId != null and jobTenantUserId != ''"> and job_tenant_user_id = #{jobTenantUserId} </if>
+        <if test="status != null and status !=''">
+            <choose>
+                <when test="status == 1">and a.status=1 and DATE_ADD(a.apply_date, INTERVAL 1 DAY) <![CDATA[ > ]]> NOW()</when>
+                <when test="status == 5">and (a.status=5 or ( a.status=1 and DATE_ADD(a.apply_date, INTERVAL 1 DAY) <![CDATA[ < ]]> NOW()))</when>
+                <otherwise> and status = #{status} </otherwise>
+            </choose>
+        </if>
+        <if test="applyStartDate != null and applyStartDate != '' ">and DATE_FORMAT(apply_date, '%Y-%m-%d') <![CDATA[>=]]> DATE_FORMAT(#{applyStartDate}, '%Y-%m-%d')</if>
+        <if test="applyEndDate != null and applyEndDate != '' ">and DATE_FORMAT(apply_date, '%Y-%m-%d') <![CDATA[<=]]> DATE_FORMAT(#{applyEndDate}, '%Y-%m-%d')</if>
+        and exists (select 1
+        from
+        tenants_staffs_info b, tenants_staff_job_info j
+        where b.staff_id = j.staff_id
+        and a.resume_tenant_staff_id=b.staff_id
+        <if test="education != null and education != ''">and  b.educarion=#{education}</if>
+        <if test="staffName != null and staffName != ''">and  b.staff_name like CONCAT('%',#{staffName},'%' )</if>
+        <if test="zodiac != null and zodiac != ''">and  b.zodiac=#{zodiac}</if>
+        <if test="nativePlace != null and nativePlace != ''">and  b.native_place=#{nativePlace}</if>
+        <if test="experience != null and experience != ''">and  j.experience=#{experience}</if>
+        <if test="ageStart != null and ageStart !=''">
+            and b.age <![CDATA[ >= ]]> #{ageStart}
+        </if>
+        <if test="ageEnd != null and ageEnd !=''">
+            and b.age <![CDATA[ <= ]]> #{ageEnd}
+        </if>
+        )
+        order by modify_time desc
+        limit #{offset},#{rowNum}
+    </select>
+
+</mapper>

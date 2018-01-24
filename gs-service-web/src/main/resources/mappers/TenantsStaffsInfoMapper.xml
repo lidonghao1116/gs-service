@@ -1,0 +1,893 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fbee.modules.mybatis.dao.TenantsStaffsInfoMapper">
+	<resultMap id="BaseResultMap"
+		type="com.fbee.modules.mybatis.entity.TenantsStaffsInfoEntity">
+		<id column="STAFF_ID" jdbcType="INTEGER" property="staffId" />
+		<result column="TENANT_ID" jdbcType="INTEGER" property="tenantId" />
+		<result column="STAFF_NAME" jdbcType="VARCHAR" property="staffName" />
+		<result column="HEAD_IMAGE" jdbcType="VARCHAR" property="headImage" />
+		<result column="CERT_NO" jdbcType="VARCHAR" property="certNo" />
+		<result column="CERT_IMAGE" jdbcType="VARCHAR" property="certImage" />
+		<result column="SEX" jdbcType="VARCHAR" property="sex" />
+		<result column="NATION" jdbcType="VARCHAR" property="nation" />
+		<result column="AGE" jdbcType="INTEGER" property="age" />
+		<result column="ZODIAC" jdbcType="VARCHAR" property="zodiac" />
+		<result column="NATIVE_PLACE" jdbcType="VARCHAR" property="nativePlace" />
+		<result column="CONSTELLATION" jdbcType="VARCHAR" property="constellation" />
+		<result column="HOUSE_ADDRESS" jdbcType="VARCHAR" property="houseAddress" />
+		<result column="MOBILE" jdbcType="VARCHAR" property="mobile" />
+		<result column="EDUCARION" jdbcType="VARCHAR" property="educarion" />
+		<result column="SPECIALTY" jdbcType="VARCHAR" property="specialty" />
+		<result column="MARITAL_STATUS" jdbcType="VARCHAR" property="maritalStatus" />
+		<result column="FERTILITY_SITUATION" jdbcType="VARCHAR" property="fertilitySituation" />
+		<result column="WEIGHT" jdbcType="VARCHAR" property="weight" />
+		<result column="HEIGHT" jdbcType="DECIMAL" property="height" />
+		<result column="BLOOD_TYPE" jdbcType="VARCHAR" property="bloodType" />
+		<result column="EXPECTED_SALARY" jdbcType="INTEGER" property="expectedSalary" />
+		<result column="LIVE_ADDRESS" jdbcType="VARCHAR" property="liveAddress" />
+		<result column="CONTACT_PHONE" jdbcType="VARCHAR" property="contactPhone" />
+		<result column="CONTACT_ADDRESS" jdbcType="VARCHAR" property="contactAddress" />
+		<result column="WORK_STATUS" jdbcType="VARCHAR" property="workStatus" />
+		<result column="ON_OFF_SHELF" jdbcType="VARCHAR" property="onOffShelf" />
+		<result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+		<result column="add_account" jdbcType="VARCHAR" property="addAccount" />
+		<result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+		<result column="modify_account" jdbcType="VARCHAR" property="modifyAccount" />
+		<result column="staff_no" jdbcType="VARCHAR" property="staffNo" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		STAFF_ID, TENANT_ID, STAFF_NAME, HEAD_IMAGE, CERT_NO,
+		CERT_IMAGE, SEX, NATION,
+		AGE,
+		ZODIAC, NATIVE_PLACE, CONSTELLATION,
+		HOUSE_ADDRESS, MOBILE, EDUCARION,
+		SPECIALTY,
+		MARITAL_STATUS,
+		FERTILITY_SITUATION, WEIGHT, HEIGHT, BLOOD_TYPE, EXPECTED_SALARY,
+		LIVE_ADDRESS, CONTACT_PHONE, CONTACT_ADDRESS, WORK_STATUS,
+		ON_OFF_SHELF, add_time,
+		add_account, modify_time, modify_account,staff_no
+	</sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tenants_staffs_info
+    where STAFF_ID = #{staffId,jdbcType=INTEGER}
+  	</select>
+  	
+  	<select id="selectByPrimaryKey2" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		STAFF_ID,
+		TENANT_ID,
+		add_time,
+		add_account,
+		modify_time,
+		modify_account,
+		<include refid="Base_Column_List" />
+		from tenants_staffs_info
+		where STAFF_ID = #{staffId,jdbcType=INTEGER}
+	</select>
+	
+	<update id="updateByPrimaryKey" parameterType="com.fbee.modules.mybatis.model.TenantsStaffsInfo">
+		update
+		tenants_staffs_info
+		set TENANT_ID = #{tenantId,jdbcType=INTEGER},
+		STAFF_NAME = #{staffName,jdbcType=VARCHAR},
+		HEAD_IMAGE =
+		#{headImage,jdbcType=VARCHAR},
+		CERT_NO = #{certNo,jdbcType=VARCHAR},
+		CERT_IMAGE = #{certImage,jdbcType=VARCHAR},
+		SEX =
+		#{sex,jdbcType=VARCHAR},
+		NATION = #{nation,jdbcType=VARCHAR},
+		AGE =
+		#{age,jdbcType=INTEGER},
+		ZODIAC = #{zodiac,jdbcType=VARCHAR},
+		NATIVE_PLACE = #{nativePlace,jdbcType=VARCHAR},
+		CONSTELLATION =
+		#{constellation,jdbcType=VARCHAR},
+		HOUSE_ADDRESS =
+		#{houseAddress,jdbcType=VARCHAR},
+		MOBILE = #{mobile,jdbcType=VARCHAR},
+		EDUCARION = #{educarion,jdbcType=VARCHAR},
+		SPECIALTY =
+		#{specialty,jdbcType=VARCHAR},
+		MARITAL_STATUS =
+		#{maritalStatus,jdbcType=VARCHAR},
+		FERTILITY_SITUATION =
+		#{fertilitySituation,jdbcType=VARCHAR},
+		WEIGHT =
+		#{weight,jdbcType=VARCHAR},
+		HEIGHT = #{height,jdbcType=DECIMAL},
+		BLOOD_TYPE = #{bloodType,jdbcType=VARCHAR},
+		EXPECTED_SALARY =
+		#{expectedSalary,jdbcType=INTEGER},
+		LIVE_ADDRESS =
+		#{liveAddress,jdbcType=VARCHAR},
+		CONTACT_PHONE =
+		#{contactPhone,jdbcType=VARCHAR},
+		CONTACT_ADDRESS =
+		#{contactAddress,jdbcType=VARCHAR},
+		WORK_STATUS =
+		#{workStatus,jdbcType=VARCHAR},
+		ON_OFF_SHELF =
+		#{onOffShelf,jdbcType=VARCHAR},
+		add_time =
+		#{addTime,jdbcType=TIMESTAMP},
+		add_account =
+		#{addAccount,jdbcType=VARCHAR},
+		modify_time =
+		#{modifyTime,jdbcType=TIMESTAMP},
+		modify_account =
+		#{modifyAccount,jdbcType=VARCHAR},
+		CV = #{cv,jdbcType=VARCHAR},
+		share_status = #{shareStatus,jdbcType=VARCHAR}
+		where STAFF_ID =
+		#{staffId,jdbcType=INTEGER}
+	</update>
+  	
+	<insert id="insert"
+		parameterType="com.fbee.modules.mybatis.entity.TenantsStaffsInfoEntity"
+		useGeneratedKeys="true" keyProperty="staffId">
+		insert into tenants_staffs_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="staffId != null">
+				STAFF_ID,
+			</if>
+			<if test="tenantId != null">
+				TENANT_ID,
+			</if>
+			<if test="staffName != null">
+				STAFF_NAME,
+			</if>
+			<if test="headImage != null">
+				HEAD_IMAGE,
+			</if>
+			<if test="certNo != null">
+				CERT_NO,
+			</if>
+			<if test="certImage != null">
+				CERT_IMAGE,
+			</if>
+			<if test="sex != null">
+				SEX,
+			</if>
+			<if test="nation != null">
+				NATION,
+			</if>
+			<if test="age != null">
+				AGE,
+			</if>
+			<if test="zodiac != null">
+				ZODIAC,
+			</if>
+			<if test="nativePlace != null">
+				NATIVE_PLACE,
+			</if>
+			<if test="constellation != null">
+				CONSTELLATION,
+			</if>
+			<if test="houseAddress != null">
+				HOUSE_ADDRESS,
+			</if>
+			<if test="mobile != null">
+				MOBILE,
+			</if>
+			<if test="educarion != null">
+				EDUCARION,
+			</if>
+			<if test="specialty != null">
+				SPECIALTY,
+			</if>
+			<if test="maritalStatus != null">
+				MARITAL_STATUS,
+			</if>
+			<if test="fertilitySituation != null">
+				FERTILITY_SITUATION,
+			</if>
+			<if test="weight != null">
+				WEIGHT,
+			</if>
+			<if test="height != null">
+				HEIGHT,
+			</if>
+			<if test="bloodType != null">
+				BLOOD_TYPE,
+			</if>
+			<if test="expectedSalary != null">
+				EXPECTED_SALARY,
+			</if>
+			<if test="liveAddress != null">
+				LIVE_ADDRESS,
+			</if>
+			<if test="contactPhone != null">
+				CONTACT_PHONE,
+			</if>
+			<if test="contactAddress != null">
+				CONTACT_ADDRESS,
+			</if>
+			<if test="workStatus != null">
+				WORK_STATUS,
+			</if>
+			<if test="onOffShelf != null">
+				ON_OFF_SHELF,
+			</if>
+			<if test="addTime != null">
+				add_time,
+			</if>
+			<if test="addAccount != null">
+				add_account,
+			</if>
+			<if test="modifyTime != null">
+				modify_time,
+			</if>
+			<if test="modifyAccount != null">
+				modify_account,
+			</if>
+			<if test="staffNo != null">
+				staff_no,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="staffId != null">
+				#{staffId,jdbcType=INTEGER},
+			</if>
+			<if test="tenantId != null">
+				#{tenantId,jdbcType=INTEGER},
+			</if>
+			<if test="staffName != null">
+				#{staffName,jdbcType=VARCHAR},
+			</if>
+			<if test="headImage != null">
+				#{headImage,jdbcType=VARCHAR},
+			</if>
+			<if test="certNo != null">
+				#{certNo,jdbcType=VARCHAR},
+			</if>
+			<if test="certImage != null">
+				#{certImage,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				#{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="nation != null">
+				#{nation,jdbcType=VARCHAR},
+			</if>
+			<if test="age != null">
+				#{age,jdbcType=INTEGER},
+			</if>
+			<if test="zodiac != null">
+				#{zodiac,jdbcType=VARCHAR},
+			</if>
+			<if test="nativePlace != null">
+				#{nativePlace,jdbcType=VARCHAR},
+			</if>
+			<if test="constellation != null">
+				#{constellation,jdbcType=VARCHAR},
+			</if>
+			<if test="houseAddress != null">
+				#{houseAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null">
+				#{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="educarion != null">
+				#{educarion,jdbcType=VARCHAR},
+			</if>
+			<if test="specialty != null">
+				#{specialty,jdbcType=VARCHAR},
+			</if>
+			<if test="maritalStatus != null">
+				#{maritalStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="fertilitySituation != null">
+				#{fertilitySituation,jdbcType=VARCHAR},
+			</if>
+			<if test="weight != null">
+				#{weight,jdbcType=VARCHAR},
+			</if>
+			<if test="height != null">
+				#{height,jdbcType=DECIMAL},
+			</if>
+			<if test="bloodType != null">
+				#{bloodType,jdbcType=VARCHAR},
+			</if>
+			<if test="expectedSalary != null">
+				#{expectedSalary,jdbcType=INTEGER},
+			</if>
+			<if test="liveAddress != null">
+				#{liveAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="contactPhone != null">
+				#{contactPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="contactAddress != null">
+				#{contactAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="workStatus != null">
+				#{workStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="onOffShelf != null">
+				#{onOffShelf,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				#{addTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="addAccount != null">
+				#{addAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				#{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyAccount != null">
+				#{modifyAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="staffNo != null">
+				#{staffNo,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="update"
+		parameterType="com.fbee.modules.mybatis.entity.TenantsStaffsInfoEntity">
+		update tenants_staffs_info
+		<set>
+			<if test="tenantId != null">
+				TENANT_ID = #{tenantId,jdbcType=INTEGER},
+			</if>
+			<if test="staffName != null">
+				STAFF_NAME = #{staffName,jdbcType=VARCHAR},
+			</if>
+			<if test="headImage != null">
+				HEAD_IMAGE = #{headImage,jdbcType=VARCHAR},
+			</if>
+			<if test="certNo != null">
+				CERT_NO = #{certNo,jdbcType=VARCHAR},
+			</if>
+			<if test="certImage != null">
+				CERT_IMAGE = #{certImage,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				SEX = #{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="nation != null">
+				NATION = #{nation,jdbcType=VARCHAR},
+			</if>
+			<if test="age != null">
+				AGE = #{age,jdbcType=INTEGER},
+			</if>
+			<if test="zodiac != null">
+				ZODIAC = #{zodiac,jdbcType=VARCHAR},
+			</if>
+			<if test="nativePlace != null">
+				NATIVE_PLACE = #{nativePlace,jdbcType=VARCHAR},
+			</if>
+			<if test="constellation != null">
+				CONSTELLATION = #{constellation,jdbcType=VARCHAR},
+			</if>
+			<if test="houseAddress != null">
+				HOUSE_ADDRESS = #{houseAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null">
+				MOBILE = #{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="educarion != null">
+				EDUCARION = #{educarion,jdbcType=VARCHAR},
+			</if>
+			<if test="specialty != null">
+				SPECIALTY = #{specialty,jdbcType=VARCHAR},
+			</if>
+			<if test="maritalStatus != null">
+				MARITAL_STATUS = #{maritalStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="fertilitySituation != null">
+				FERTILITY_SITUATION =
+				#{fertilitySituation,jdbcType=VARCHAR},
+			</if>
+			<if test="weight != null">
+				WEIGHT = #{weight,jdbcType=VARCHAR},
+			</if>
+			<if test="height != null">
+				HEIGHT = #{height,jdbcType=DECIMAL},
+			</if>
+			<if test="bloodType != null">
+				BLOOD_TYPE = #{bloodType,jdbcType=VARCHAR},
+			</if>
+			<if test="expectedSalary != null">
+				EXPECTED_SALARY = #{expectedSalary,jdbcType=INTEGER},
+			</if>
+			<if test="liveAddress != null">
+				LIVE_ADDRESS = #{liveAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="contactPhone != null">
+				CONTACT_PHONE = #{contactPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="contactAddress != null">
+				CONTACT_ADDRESS = #{contactAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="workStatus != null">
+				WORK_STATUS = #{workStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="onOffShelf != null">
+				ON_OFF_SHELF = #{onOffShelf,jdbcType=VARCHAR},
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="addAccount != null">
+				add_account = #{addAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyTime != null">
+				modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyAccount != null">
+				modify_account = #{modifyAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="staffNo != null">
+				staff_no = #{staffNo,jdbcType=VARCHAR},
+			</if>
+			<if test="shareStatus != null">
+				share_status = #{shareStatus,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where STAFF_ID = #{staffId,jdbcType=INTEGER}
+	</update>
+	<select id="getStaffQueryCount" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+		select
+		count(0)
+		from tenants_staffs_info
+		where TENANT_ID =
+		#{tenantId,jdbcType=INTEGER}
+	</select>
+
+	<select id="getStaffQueryList" parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tenants_staffs_info
+		where TENANT_ID = #{tenantId,jdbcType=INTEGER}
+	</select>
+
+	<select id="getStaffInfo"
+		parameterType="com.fbee.modules.mybatis.entity.TenantsStaffsInfoEntity"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tenants_staffs_info
+		where STAFF_ID = #{staffId,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectRecommendList" parameterType="java.lang.Integer"
+		resultType="java.util.Map">
+		SELECT
+		a.STAFF_ID "staffId",
+		a.HEAD_IMAGE "headImage",
+		a.STAFF_NAME "staffName",
+		d.ID "recommendId",
+		CONCAT_WS(
+		"/",
+		a.AGE,
+		FUNC_GET_CODE_NAME ("ZODIAC", a.ZODIAC),
+		concat(
+		FUNC_GET_CODE_NAME (
+		"NATIVE_PLACE",
+		a.NATIVE_PLACE
+		),
+		"人"
+		)
+		) "baseInfo",
+		CONCAT(
+		FUNC_GET_CODE_NAME ("EDUCARION", a.EDUCARION),
+		"(",a.SPECIALTY, ")"
+		)
+		"education",
+		group_concat(c.SERVICE_ITEM_NAME) "serviceType",
+		FUNC_GET_CODE_NAME (
+		"WORK_STATUS",
+		a.WORK_STATUS
+		) "workStatus"
+		FROM
+		tenants_staffs_info a,
+		tenants_staff_ser_items b,
+		tenants_service_items
+		c,
+		tenants_recommend d
+		WHERE
+		a.STAFF_ID = b.STAFF_ID
+		AND a.TENANT_ID =
+		b.TENANT_ID
+		AND b.TENANT_ID =
+		c.TENANT_ID
+		AND b.SERVICE_ITEM_CODE =
+		c.SERVICE_ITEM_CODE
+		AND a.STAFF_ID
+		= d.STAFF_ID
+		AND a.TENANT_ID =
+		d.TENANT_ID
+		AND a.TENANT_ID =
+		#{tenantId,jdbcType=INTEGER}
+		GROUP BY
+		a.STAFF_ID
+		ORDER BY
+		d.add_time DESC
+		LIMIT 2
+	</select>
+
+	<select id="selectStaffInfoList" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		SELECT
+		a.STAFF_ID "staffId",
+		a.HEAD_IMAGE "headImage",
+		a.STAFF_NAME "staffName",
+		CONCAT_WS(
+		"/",
+		a.AGE,
+		FUNC_GET_CODE_NAME
+		("ZODIAC", a.ZODIAC),
+		concat(
+		FUNC_GET_CODE_NAME (
+		"NATIVE_PLACE",
+		a.NATIVE_PLACE
+		),
+		"人"
+		)
+		) "baseInfo",
+		CONCAT(
+		FUNC_GET_CODE_NAME
+		("EDUCARION", a.EDUCARION),
+		"(",a.SPECIALTY, ")"
+		) "education",
+		group_concat(c.SERVICE_ITEM_NAME) "serviceType",
+		FUNC_GET_CODE_NAME (
+		"WORK_STATUS",
+		a.WORK_STATUS
+		) "workStatus"
+		FROM
+		tenants_staffs_info a,
+		tenants_staff_ser_items b,
+		tenants_service_items c
+		WHERE
+		a.STAFF_ID =
+		b.STAFF_ID
+		AND a.TENANT_ID = b.TENANT_ID
+		AND b.TENANT_ID =
+		c.TENANT_ID
+		AND b.SERVICE_ITEM_CODE = c.SERVICE_ITEM_CODE
+		AND
+		a.TENANT_ID =
+		#{0,jdbcType=INTEGER}
+		GROUP BY
+		a.STAFF_ID
+		ORDER BY
+		a.add_time DESC
+		LIMIT
+		#{1,jdbcType=INTEGER},#{2,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getStaffsInfo"
+		parameterType="java.lang.Integer"
+		resultType="java.util.Map">
+		select
+		STAFF_NAME "staffName",
+		AGE "age",ZODIAC "zodiac",SEX "sex",
+		NATIVE_PLACE "nativePlace",
+		HEAD_IMAGE,staff_no
+		from tenants_staffs_info
+		where STAFF_ID=#{staffId}
+	</select>
+	
+	<select id="getStaffInfoByStaffId" 
+	    parameterType="java.util.Map" 
+	    resultType="java.util.Map">
+		SELECT
+		a.STAFF_ID "staffId",
+		a.HEAD_IMAGE "headImage",
+		a.STAFF_NAME "staffName",
+		d.ID "recommendId",
+		CONCAT_WS(
+		"/",
+		a.AGE,
+		FUNC_GET_CODE_NAME ("ZODIAC", a.ZODIAC),
+		concat(
+		FUNC_GET_CODE_NAME (
+		"NATIVE_PLACE",
+		a.NATIVE_PLACE
+		),
+		"人"
+		)
+		) "baseInfo",
+		CONCAT(
+		FUNC_GET_CODE_NAME ("EDUCARION", a.EDUCARION),
+		"(",a.SPECIALTY, ")"
+		)
+		"education",
+		group_concat(c.SERVICE_ITEM_NAME) "serviceType",
+		FUNC_GET_CODE_NAME (
+		"WORK_STATUS",
+		a.WORK_STATUS
+		) "workStatus"
+		FROM
+		tenants_staffs_info a,
+		tenants_staff_ser_items b,
+		tenants_service_items
+		c,
+		tenants_recommend d
+		WHERE
+		a.STAFF_ID = b.STAFF_ID
+		AND a.TENANT_ID =
+		b.TENANT_ID
+		AND b.TENANT_ID =
+		c.TENANT_ID
+		AND b.SERVICE_ITEM_CODE =
+		c.SERVICE_ITEM_CODE
+		AND a.STAFF_ID
+		= d.STAFF_ID
+		AND a.TENANT_ID =
+		d.TENANT_ID
+		AND a.TENANT_ID =
+		#{0,jdbcType=INTEGER}
+		AND a.STAFF_ID =
+		#{1,jdbcType=INTEGER}
+		GROUP BY
+		a.STAFF_ID
+	</select>
+
+	
+	<select id="reserveOrderDetails" parameterType="java.lang.Integer" 
+	    resultType="java.util.Map">
+		select
+		<include refid="Base_Column_List"></include>
+		from tenants_staffs_info
+		where STAFF_ID=#{staffid}
+	</select>
+	
+	<select id="getStaffInfoLikeStaffName" 
+	    parameterType="java.util.Map" 
+	    resultType="java.util.Map">
+	    SELECT
+			a.STAFF_ID "staffId",
+			a.HEAD_IMAGE "headImage",
+			a.STAFF_NAME "staffName",
+		CONCAT_WS(
+		"/",
+		a.AGE,
+		FUNC_GET_CODE_NAME
+		("ZODIAC", a.ZODIAC),
+		concat(
+		FUNC_GET_CODE_NAME (
+		"NATIVE_PLACE",
+		a.NATIVE_PLACE
+		),
+		"人"
+		)
+		) "baseInfo",
+		CONCAT(
+		FUNC_GET_CODE_NAME
+		("EDUCARION", a.EDUCARION),
+		"(",a.SPECIALTY, ")"
+		) "education",
+		group_concat(c.SERVICE_ITEM_NAME) "serviceType",
+		FUNC_GET_CODE_NAME (
+		"WORK_STATUS",
+		a.WORK_STATUS
+		) "workStatus"
+		FROM
+		tenants_staffs_info a,
+		tenants_staff_ser_items b,
+		tenants_service_items c
+		WHERE
+		a.STAFF_ID =
+		b.STAFF_ID
+		AND a.TENANT_ID = b.TENANT_ID
+		AND b.TENANT_ID =
+		c.TENANT_ID
+		AND b.SERVICE_ITEM_CODE = c.SERVICE_ITEM_CODE
+		AND
+		a.TENANT_ID =
+		#{0,jdbcType=INTEGER}
+		AND a.STAFF_NAME LIKE
+		CONCAT(CONCAT('%',#{1,jdbcType=VARCHAR}),'%')
+		GROUP BY
+		a.STAFF_ID
+		ORDER
+		BY
+		a.add_time DESC
+	</select>
+ 	<select id="getStaffCountByTenantId" parameterType="java.util.Map" resultType="java.lang.Integer">
+	select count(0)
+		FROM
+		TENANTS_STAFF_SER_ITEMS t,
+		TENANTS_STAFFS_INFO s,
+		TENANTS_SERVICE_ITEMS r,
+		tenants_staff_job_info b
+		WHERE
+		s.staff_id = b.staff_id
+		and t.STAFF_ID = s.STAFF_ID
+		and s.TENANT_ID = r.TENANT_ID
+		and t.is_usable='1'
+		AND
+		t.SERVICE_ITEM_CODE=r.SERVICE_ITEM_CODE
+		AND t.TENANT_ID=#{tenantId,jdbcType=INTEGER}
+		AND r.SERVICE_ITEM_CODE=#{itemCode,jdbcType=VARCHAR}
+		AND s.ON_OFF_SHELF=1
+		<if test="minServicePrice != null and minServicePrice !=''">
+			and b.price>= #{minServicePrice,jdbcType=DECIMAL}
+		</if>
+		<if test="maxServicePrice != null and maxServicePrice !=''">
+			and b.price<![CDATA[<]]>#{maxServicePrice,jdbcType=DECIMAL}
+		</if>
+		<if test="experience != null and experience != ''">
+			and b.EXPERIENCE = #{experience,jdbcType=VARCHAR}
+		</if>
+		<if test="minAge != null and minAge != ''">
+			and s.age >= #{minAge,jdbcType=INTEGER}
+		</if>
+		<if test="maxAge != null and maxAge != ''">
+			and s.age <![CDATA[<]]> #{maxAge,jdbcType=INTEGER}
+		</if>
+		<if test="zodiac != null and zodiac != ''">
+			and s.zodiac = #{zodiac,jdbcType=VARCHAR}
+		</if>
+		<if test="education != null and education != ''">
+			and s.educarion = #{education,jdbcType=VARCHAR}
+		</if>
+		<if test="serviceNature != null and serviceNature != ''">
+			and t.SERVICE_NATURE = #{serviceNature,jdbcType=VARCHAR}
+		</if>
+		<if test="nativePlace != null and nativePlace != ''">
+			and s.NATIVE_PLACE = #{nativePlace,jdbcType=VARCHAR}
+		</if>
+		<if test="sex != null and sex != ''">
+			and s.sex = #{sex,jdbcType=VARCHAR}
+		</if>
+		<if test="workStatus != null and workStatus != ''">
+			and s.work_Status = #{workStatus,jdbcType=VARCHAR}
+		</if>
+
+		<if test="unit != null and unit != ''">
+			and b.unit = #{unit}
+		</if>
+		<if test="unitList != null">
+			and b.unit in
+			<foreach item="item" index="index" collection="unitList" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+	</select>
+	<select id="getStaffPersonInfo" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		SELECT
+		s.STAFF_ID "staffId",
+		s.head_image "headImage",
+		s.staff_name
+		"staffName",
+		FUNC_GET_CODE_NAME ("SERVICE_TYPES",r.SERVICE_ITEM_CODE,"1")
+		"serviceItemName",
+		s.age "age",
+		s.SEX "sex",
+		FUNC_GET_CODE_NAME ("ZODIAC", s.ZODIAC,"1")
+		"zodiac",
+		FUNC_GET_CODE_NAME ("NATIVE_PLACE",s.NATIVE_PLACE,"1")
+		"nativePlace",
+		FUNC_GET_CODE_NAME ("EDUCATION", s.EDUCARION,"1")
+		"education",
+		FUNC_GET_CODE_NAME ("CONSTELLATION", s.CONSTELLATION,"1")
+		"constellation",
+		FUNC_GET_CODE_NAME("WORK_STATUS",s.WORK_STATUS,"1")
+		"workStatus",
+		FUNC_GET_CODE_NAME("EXPERIENCE",b.EXPERIENCE,"1")
+		"experience",
+		b.PRICE "price",
+		b.UNIT "servicePriceUnit"
+
+		FROM
+		TENANTS_STAFF_SER_ITEMS t,
+		TENANTS_STAFFS_INFO s,
+		TENANTS_SERVICE_ITEMS r,
+		tenants_staff_job_info b
+		WHERE
+		t.staff_id = b.staff_id
+		and t.STAFF_ID = s.STAFF_ID
+		and s.TENANT_ID = r.TENANT_ID
+		and t.is_usable='1'
+		AND
+		t.SERVICE_ITEM_CODE=r.SERVICE_ITEM_CODE
+		AND t.TENANT_ID=#{tenantId,jdbcType=INTEGER}
+		AND r.SERVICE_ITEM_CODE=#{itemCode,jdbcType=VARCHAR}
+		AND s.ON_OFF_SHELF=1
+		<if test="minServicePrice != null and minServicePrice !=''">
+			and b.price>= #{minServicePrice,jdbcType=DECIMAL}
+		</if>
+		<if test="maxServicePrice != null and maxServicePrice !=''">
+			and b.price<![CDATA[<]]>#{maxServicePrice,jdbcType=DECIMAL}
+		</if>
+		<if test="experience != null and experience != ''">
+			and b.EXPERIENCE = #{experience,jdbcType=VARCHAR}
+		</if>
+		<if test="minAge != null and minAge != ''">
+			and s.age >= #{minAge,jdbcType=INTEGER}
+		</if>
+		<if test="maxAge != null and maxAge != ''">
+			and s.age <![CDATA[<]]> #{maxAge,jdbcType=INTEGER}
+		</if>
+		<if test="zodiac != null and zodiac != ''">
+			and s.zodiac = #{zodiac,jdbcType=VARCHAR}
+		</if>
+		<if test="education != null and education != ''">
+			and s.educarion = #{education,jdbcType=VARCHAR}
+		</if>
+		<if test="serviceNature != null and serviceNature != ''">
+			and t.SERVICE_NATURE = #{serviceNature,jdbcType=VARCHAR}
+		</if>
+		<if test="nativePlace != null and nativePlace != ''">
+			and s.NATIVE_PLACE = #{nativePlace,jdbcType=VARCHAR}
+		</if>
+		<if test="sex != null and sex != ''">
+			and s.sex = #{sex,jdbcType=VARCHAR}
+		</if>
+		<if test="workStatus != null and workStatus != ''">
+			and s.work_Status = #{workStatus,jdbcType=VARCHAR}
+		</if>
+		<if test="unit != null and unit != ''">
+			and t.unit = #{unit}
+		</if>
+		<if test="unitList != null">
+			and t.unit in
+			<foreach item="item" index="index" collection="unitList" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		
+		ORDER BY 
+		
+		<if test="ageBy =='asc' ">
+		s.age ASC,
+		</if>
+	    <if test="ageBy =='desc' ">
+		s.age DESC,
+		</if>
+		<if test="priceBy=='asc'">
+		b.PRICE ASC,
+		</if>
+		<if test="priceBy=='desc'">
+		b.PRICE DESC,
+		</if>
+		<if test="experienceBy=='asc'">
+		b.EXPERIENCE ASC,
+		</if>
+		<if test="experienceBy=='desc'">
+		b.EXPERIENCE DESC,
+		</if>
+		s.add_time DESC
+		limit #{pageNumber},#{pageSize}
+	</select>
+
+
+
+	<select id="getSnapshotById" resultType="com.fbee.modules.mybatis.model.StaffSnapShotInfo">
+		select
+		a.staff_id 'id',
+		a.staff_name 'staffName',
+		a.head_image 'headImage',
+		a.age,
+		a.zodiac,
+		a.educarion 'education',
+		a.constellation,
+		a.native_place 'nativePlace',
+		a.sex,
+		a.mobile,
+		b.price,
+		b.unit,
+		b.experience,
+		b.work_experience 'workExperience',
+		a.work_status 'workStatus',
+		b.service_area 'serviceArea',
+		(select group_concat(service_item_code) from tenants_staff_ser_items s where s.staff_id=#{value} and is_usable=1) 'serviceType'
+		from tenants_staffs_info a, tenants_staff_job_info b
+		where a.staff_id = #{value}
+		and a.staff_id = b.staff_id
+	</select>
+
+</mapper>

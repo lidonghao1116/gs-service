@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fbee.modules.mybatis.dao.TenantsFinanceRecordsMapper">
+  <resultMap id="BaseResultMap" type="com.fbee.modules.mybatis.model.TenantsFinanceRecords">
+    <id column="IN_OUT_NO" jdbcType="VARCHAR" property="inOutNo" />
+    <result column="TENANT_ID" jdbcType="INTEGER" property="tenantId" />
+    <result column="STAFF_ID" jdbcType="INTEGER" property="staffId" />
+    <result column="PAY_NO" jdbcType="VARCHAR" property="payNo" />
+    <result column="PAY_TYPE" jdbcType="VARCHAR" property="payType" />
+    <result column="RELATED_TRANS" jdbcType="VARCHAR" property="relatedTrans" />
+    <result column="IN_OUT_CATEGORY" jdbcType="VARCHAR" property="inOutCategory" />
+    <result column="IN_OUT_TYPE" jdbcType="VARCHAR" property="inOutType" />
+    <result column="IN_OUT_MANTISSA" jdbcType="VARCHAR" property="inOutMantissa" />
+    <result column="IN_OUT_OBJECT" jdbcType="VARCHAR" property="inOutObject" />
+    <result column="IN_OUT_AMOUNT" jdbcType="DECIMAL" property="inOutAmount" />
+    <result column="TRANS_TYPE" jdbcType="VARCHAR" property="transType" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="add_account" jdbcType="VARCHAR" property="addAccount" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="modify_account" jdbcType="VARCHAR" property="modifyAccount" />
+    <result column="is_usable" jdbcType="VARCHAR" property="isUsable" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="drawee_id" jdbcType="INTEGER" property="draweeId" />
+    <result column="payee_id" jdbcType="INTEGER" property="payeeId" />
+    <result column="drawee_type" jdbcType="VARCHAR" property="draweeType" />
+    <result column="payee_type" jdbcType="VARCHAR" property="payeeType" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    IN_OUT_NO, TENANT_ID, STAFF_ID, PAY_NO, PAY_TYPE, RELATED_TRANS, IN_OUT_CATEGORY, 
+    IN_OUT_TYPE, IN_OUT_MANTISSA, IN_OUT_OBJECT, IN_OUT_AMOUNT, TRANS_TYPE, remarks, 
+    add_time, add_account, modify_time, modify_account, is_usable, status, drawee_id, 
+    payee_id, drawee_type, payee_type
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tenants_finance_records
+    where IN_OUT_NO = #{inOutNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tenants_finance_records
+    where IN_OUT_NO = #{inOutNo,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.fbee.modules.mybatis.model.TenantsFinanceRecords">
+    insert into tenants_finance_records (IN_OUT_NO, TENANT_ID, STAFF_ID, 
+      PAY_NO, PAY_TYPE, RELATED_TRANS, 
+      IN_OUT_CATEGORY, IN_OUT_TYPE, IN_OUT_MANTISSA, 
+      IN_OUT_OBJECT, IN_OUT_AMOUNT, TRANS_TYPE, 
+      remarks, add_time, add_account, 
+      modify_time, modify_account, is_usable, 
+      status, drawee_id, payee_id, 
+      drawee_type, payee_type)
+    values (#{inOutNo,jdbcType=VARCHAR}, #{tenantId,jdbcType=INTEGER}, #{staffId,jdbcType=INTEGER}, 
+      #{payNo,jdbcType=VARCHAR}, #{payType,jdbcType=VARCHAR}, #{relatedTrans,jdbcType=VARCHAR}, 
+      #{inOutCategory,jdbcType=VARCHAR}, #{inOutType,jdbcType=VARCHAR}, #{inOutMantissa,jdbcType=VARCHAR}, 
+      #{inOutObject,jdbcType=VARCHAR}, #{inOutAmount,jdbcType=DECIMAL}, #{transType,jdbcType=VARCHAR}, 
+      #{remarks,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{addAccount,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{modifyAccount,jdbcType=VARCHAR}, #{isUsable,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{draweeId,jdbcType=INTEGER}, #{payeeId,jdbcType=INTEGER}, 
+      #{draweeType,jdbcType=VARCHAR}, #{payeeType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fbee.modules.mybatis.model.TenantsFinanceRecords">
+    insert into tenants_finance_records
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="inOutNo != null">
+        IN_OUT_NO,
+      </if>
+      <if test="tenantId != null">
+        TENANT_ID,
+      </if>
+      <if test="staffId != null">
+        STAFF_ID,
+      </if>
+      <if test="payNo != null">
+        PAY_NO,
+      </if>
+      <if test="payType != null">
+        PAY_TYPE,
+      </if>
+      <if test="relatedTrans != null">
+        RELATED_TRANS,
+      </if>
+      <if test="inOutCategory != null">
+        IN_OUT_CATEGORY,
+      </if>
+      <if test="inOutType != null">
+        IN_OUT_TYPE,
+      </if>
+      <if test="inOutMantissa != null">
+        IN_OUT_MANTISSA,
+      </if>
+      <if test="inOutObject != null">
+        IN_OUT_OBJECT,
+      </if>
+      <if test="inOutAmount != null">
+        IN_OUT_AMOUNT,
+      </if>
+      <if test="transType != null">
+        TRANS_TYPE,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="addAccount != null">
+        add_account,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+      <if test="modifyAccount != null">
+        modify_account,
+      </if>
+      <if test="isUsable != null">
+        is_usable,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="draweeId != null">
+        drawee_id,
+      </if>
+      <if test="payeeId != null">
+        payee_id,
+      </if>
+      <if test="draweeType != null">
+        drawee_type,
+      </if>
+      <if test="payeeType != null">
+        payee_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="inOutNo != null">
+        #{inOutNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tenantId != null">
+        #{tenantId,jdbcType=INTEGER},
+      </if>
+      <if test="staffId != null">
+        #{staffId,jdbcType=INTEGER},
+      </if>
+      <if test="payNo != null">
+        #{payNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="relatedTrans != null">
+        #{relatedTrans,jdbcType=VARCHAR},
+      </if>
+      <if test="inOutCategory != null">
+        #{inOutCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="inOutType != null">
+        #{inOutType,jdbcType=VARCHAR},
+      </if>
+      <if test="inOutMantissa != null">
+        #{inOutMantissa,jdbcType=VARCHAR},
+      </if>
+      <if test="inOutObject != null">
+        #{inOutObject,jdbcType=VARCHAR},
+      </if>
+      <if test="inOutAmount != null">
+        #{inOutAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="transType != null">
+        #{transType,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addAccount != null">
+        #{addAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyAccount != null">
+        #{modifyAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="isUsable != null">
+        #{isUsable,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="draweeId != null">
+        #{draweeId,jdbcType=INTEGER},
+      </if>
+      <if test="payeeId != null">
+        #{payeeId,jdbcType=INTEGER},
+      </if>
+      <if test="draweeType != null">
+        #{draweeType,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeType != null">
+        #{payeeType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fbee.modules.mybatis.model.TenantsFinanceRecords">
+    update tenants_finance_records
+    <set>
+      <if test="tenantId != null">
+        TENANT_ID = #{tenantId,jdbcType=INTEGER},
+      </if>
+      <if test="staffId != null">
+        STAFF_ID = #{staffId,jdbcType=INTEGER},
+      </if>
+      <if test="payNo != null">
+        PAY_NO = #{payNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        PAY_TYPE = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="relatedTrans != null">
+        RELATED_TRANS = #{relatedTrans,jdbcType=VARCHAR},
+      </if>
+      <if test="inOutCategory != null">
+        IN_OUT_CATEGORY = #{inOutCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="inOutType != null">
+        IN_OUT_TYPE = #{inOutType,jdbcType=VARCHAR},
+      </if>
+      <if test="inOutMantissa != null">
+        IN_OUT_MANTISSA = #{inOutMantissa,jdbcType=VARCHAR},
+      </if>
+      <if test="inOutObject != null">
+        IN_OUT_OBJECT = #{inOutObject,jdbcType=VARCHAR},
+      </if>
+      <if test="inOutAmount != null">
+        IN_OUT_AMOUNT = #{inOutAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="transType != null">
+        TRANS_TYPE = #{transType,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="addAccount != null">
+        add_account = #{addAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyAccount != null">
+        modify_account = #{modifyAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="isUsable != null">
+        is_usable = #{isUsable,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="draweeId != null">
+        drawee_id = #{draweeId,jdbcType=INTEGER},
+      </if>
+      <if test="payeeId != null">
+        payee_id = #{payeeId,jdbcType=INTEGER},
+      </if>
+      <if test="draweeType != null">
+        drawee_type = #{draweeType,jdbcType=VARCHAR},
+      </if>
+      <if test="payeeType != null">
+        payee_type = #{payeeType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where IN_OUT_NO = #{inOutNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fbee.modules.mybatis.model.TenantsFinanceRecords">
+    update tenants_finance_records
+    set TENANT_ID = #{tenantId,jdbcType=INTEGER},
+      STAFF_ID = #{staffId,jdbcType=INTEGER},
+      PAY_NO = #{payNo,jdbcType=VARCHAR},
+      PAY_TYPE = #{payType,jdbcType=VARCHAR},
+      RELATED_TRANS = #{relatedTrans,jdbcType=VARCHAR},
+      IN_OUT_CATEGORY = #{inOutCategory,jdbcType=VARCHAR},
+      IN_OUT_TYPE = #{inOutType,jdbcType=VARCHAR},
+      IN_OUT_MANTISSA = #{inOutMantissa,jdbcType=VARCHAR},
+      IN_OUT_OBJECT = #{inOutObject,jdbcType=VARCHAR},
+      IN_OUT_AMOUNT = #{inOutAmount,jdbcType=DECIMAL},
+      TRANS_TYPE = #{transType,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      add_account = #{addAccount,jdbcType=VARCHAR},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      modify_account = #{modifyAccount,jdbcType=VARCHAR},
+      is_usable = #{isUsable,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      drawee_id = #{draweeId,jdbcType=INTEGER},
+      payee_id = #{payeeId,jdbcType=INTEGER},
+      drawee_type = #{draweeType,jdbcType=VARCHAR},
+      payee_type = #{payeeType,jdbcType=VARCHAR}
+    where IN_OUT_NO = #{inOutNo,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 根据payNo查询到inOutNo -->
+  <select id="getInOutNo" parameterType="java.lang.String" resultType="java.util.Map">
+  	select <include refid="Base_Column_List"></include>
+  	from tenants_finance_records
+  	where PAY_NO = #{payNo,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 取消订单，更改状态为：处理中（交易失败）冻结退款金额 -->
+  <update id="updateByPayNo" parameterType="java.lang.String">
+    update tenants_finance_records
+    set 
+      status = '02' 
+    where IN_OUT_NO = #{inOutNo,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

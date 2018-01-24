@@ -1,0 +1,13 @@
+{
+  "latest": "1.0",
+  "1.0": {
+    "schema": "http://wx.jiacer.com",
+    "root": "http://wx.jiacer.com/fbeeWebConsole_web",
+    "pay": "http://wx.jiacer.com/fbeeWebConsole_web/api/pay",
+    "version_info": {
+      "version": "1.0",
+      "issuing_date": "2017-08-10",
+      "tag": "release"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "latest": "1.0",
+  "1.0": {
+    "schema": "http://wxcs.jiacer.com",
+    "root": "http://wxcs.jiacer.com/fbeeWebConsole_web",
+    "auth": "http://wxcs.jiacer.com/fbeeWebConsole_web/auth",
+    "wechat": "http://wxcs.jiacer.com/fbeeWebConsole_web/wechat",
+    "user": "http://wxcs.jiacer.com/fbeeWebConsole_web/user",
+    "order": "http://wxcs.jiacer.com/fbeeWebConsole_web/order",
+    "house_keeping": "http://wxcs.jiacer.com/fbeeWebConsole_web/house_keeping",
+    "common": "http://wxcs.jiacer.com/fbeeWebConsole_web/common",
+    "customer_server": "http://wxcs.jiacer.com/fbeeWebConsole_web/customer_server",
+    "job_recruit": "http://wxcs.jiacer.com/fbeeWebConsole_web/job_recruit",
+    "member": "http://wxcs.jiacer.com/fbeeWebConsole_web/member",
+    "payment": "http://wxcs.jiacer.com/fbeeWebConsole_web/payment",
+    "staffs": "http://wxcs.jiacer.com/fbeeWebConsole_web/staffs",
+    "tenant": "http://wxcs.jiacer.com/fbeeWebConsole_web/tenant",
+    "service": "http://wxcs.jiacer.com/fbeeWebConsole_web/service",
+    "version_info": {
+      "version": "1.0",
+      "issuing_date": "2017-08-10",
+      "tag": "release"
+    }
+  }
+}
